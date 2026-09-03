@@ -44,6 +44,17 @@ npm test
 npm run seed
 ```
 
+### MongoDB Atlas and Render
+
+The deployment configuration expects these environment variables:
+
+- `MONGO_URI`: MongoDB Atlas connection string
+- `MONGO_DB_NAME`: Atlas database name (defaults to `apex-product-app`)
+
+Copy `.env.example` to `.env` for local configuration. `.env` is ignored by Git, and `MONGO_URI` must be added as a secret in Render.
+
+Note: the current database manager still uses local SQLite through `node:sqlite`; these variables are ready for the MongoDB migration but are not used by the current SQLite implementation.
+
 ---
 
 ## Keyboard Shortcuts

@@ -1,4 +1,6 @@
 // server.js - High-Performance REST API & Static Server for Apex Product App
+require('dotenv').config();
+
 const http = require('node:http');
 const url = require('node:url');
 const path = require('node:path');
