@@ -7,6 +7,7 @@ const API = {
       const url = `${this.baseUrl}${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
+        ...(localStorage.getItem('apex_auth_token') ? { Authorization: `Bearer ${localStorage.getItem('apex_auth_token')}` } : {}),
         ...(options.headers || {})
       };
 
@@ -32,6 +33,14 @@ const API = {
       console.error(`API Error on [${options.method || 'GET'}] ${endpoint}:`, err);
       throw err;
     }
+  },
+
+  async signup(userData) {
+    return this.request('/auth/signup', { method: 'POST', body: userData });
+  },
+
+  async login(credentials) {
+    return this.request('/auth/user-login', { method: 'POST', body: credentials });
   },
 
   // Products

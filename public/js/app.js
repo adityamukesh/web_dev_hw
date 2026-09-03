@@ -29,7 +29,8 @@
     isCartOpen: false,
     activeModal: null, // 'detail' | 'checkout' | 'receipt' | 'crud'
     currentDetailProduct: null,
-    currentOrderReceipt: null
+    currentOrderReceipt: null,
+    user: loadFromStorage('apex_user', null)
   };
 
   function loadFromStorage(key, fallback) {
@@ -269,6 +270,9 @@
 
   // Event Bindings
   function bindNavbarEvents() {
+    const authBtn = document.getElementById('nav-auth-btn');
+    if (authBtn) authBtn.addEventListener('click', () => state.user ? logout() : openAuthModal());
+
     // Brand home
     const homeBtn = document.getElementById('brand-home-btn');
     if (homeBtn) {
@@ -339,6 +343,26 @@
         renderCart();
       });
     }
+  }
+
+  function logout() {
+    localStorage.removeItem('apex_auth_token');
+    localStorage.removeItem('apex_user');
+    state.user = null;
+    renderNavbar();
+    window.toast.info('You have been logged out.');
+  }
+
+  function openAuthModal() {
+    const container = document.getElementById('auth-modal-container');
+    let mode = 'login';
+    const render = () => {
+      container.innerHTML = `<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4" id="auth-backdrop"><form id="auth-form" class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-2xl space-y-4"><div class="flex items-center justify-between"><h2 class="text-xl font-black">${mode === 'login' ? 'Welcome back' : 'Create your account'}</h2><button type="button" id="auth-close" class="text-slate-400 text-xl">&times;</button></div>${mode === 'signup' ? '<input required id="auth-name" placeholder="Full name" class="w-full rounded-xl border p-3 text-sm dark:bg-slate-800 dark:border-slate-700">' : ''}<input required type="email" id="auth-email" placeholder="Email address" class="w-full rounded-xl border p-3 text-sm dark:bg-slate-800 dark:border-slate-700"><input required minlength="8" type="password" id="auth-password" placeholder="Password (min. 8 characters)" class="w-full rounded-xl border p-3 text-sm dark:bg-slate-800 dark:border-slate-700"><button class="w-full rounded-xl bg-indigo-600 py-3 text-white font-bold">${mode === 'login' ? 'Login' : 'Sign up'}</button><button type="button" id="auth-switch" class="w-full text-sm text-indigo-600">${mode === 'login' ? 'New here? Create an account' : 'Already have an account? Login'}</button></form></div>`;
+      container.querySelector('#auth-close').onclick = () => { container.innerHTML = ''; };
+      container.querySelector('#auth-switch').onclick = () => { mode = mode === 'login' ? 'signup' : 'login'; render(); };
+      container.querySelector('#auth-form').onsubmit = async event => { event.preventDefault(); const form = event.currentTarget; const data = { email: form.querySelector('#auth-email').value, password: form.querySelector('#auth-password').value }; if (mode === 'signup') data.name = form.querySelector('#auth-name').value; try { const result = mode === 'signup' ? await window.API.signup(data) : await window.API.login(data); state.user = result.user; localStorage.setItem('apex_auth_token', result.token); localStorage.setItem('apex_user', JSON.stringify(result.user)); container.innerHTML = ''; renderNavbar(); window.toast.success(mode === 'signup' ? 'Account created successfully.' : 'Welcome back.'); } catch (error) { window.toast.error(error.message); } };
+    };
+    render();
   }
 
   function bindSidebarEvents() {

@@ -1,13 +1,13 @@
 # Apex Product OS & Storefront 🚀
 
-A modern, full-stack product application engineered with zero external npm dependencies using native Node.js 26 and `node:sqlite`. It features both a high-performance **Customer Storefront** and a real-time **Inventory Control & Analytics Studio**.
+A modern, full-stack product application powered by MongoDB Atlas and Mongoose. It features both a high-performance **Customer Storefront** and a real-time **Inventory Control & Analytics Studio**.
 
 ---
 
 ## Key Highlights
 
 - **Backend Architecture**:
-  - Pure Node.js HTTP REST engine with native SQLite database (`node:sqlite`).
+  - Pure Node.js HTTP REST engine with MongoDB Atlas via Mongoose.
   - ACID transactional order processing and atomic inventory management.
   - Multi-faceted query filtering (search, categories, price range, ratings, in-stock status, sorting, pagination).
   - Business Intelligence analytics engine (catalog valuation, stock alerts, category breakdowns, revenue stats).
@@ -50,10 +50,14 @@ The deployment configuration expects these environment variables:
 
 - `MONGO_URI`: MongoDB Atlas connection string
 - `MONGO_DB_NAME`: Atlas database name (defaults to `apex-product-app`)
+- `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_TOKEN`: admin authentication secrets
+- `AUTH_SECRET`: secret used to sign user session tokens
 
-Copy `.env.example` to `.env` for local configuration. `.env` is ignored by Git, and `MONGO_URI` must be added as a secret in Render.
+Copy `.env.example` to `.env` for local configuration. `.env` is ignored by Git. Add all five values as secrets/environment variables in Render.
 
-Note: the current database manager still uses local SQLite through `node:sqlite`; these variables are ready for the MongoDB migration but are not used by the current SQLite implementation.
+Admin clients first call `POST /api/auth/login` with `{ "username": "...", "password": "..." }`, then send `Authorization: Bearer <ADMIN_TOKEN>` for catalog, stock, seed, and order-management operations.
+
+Customers can create accounts with `POST /api/auth/signup` and sign in with `POST /api/auth/user-login`. The browser includes the returned session token automatically.
 
 ---
 

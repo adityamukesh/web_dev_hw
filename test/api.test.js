@@ -6,9 +6,11 @@ const { Readable } = require('node:stream');
 const { handleRequest } = require('../server.js');
 const db = require('../db/database.js');
 
-test.beforeEach(() => {
-  db.resetDatabase();
+test.beforeEach(async () => {
+  await db.resetDatabase();
 });
+
+test.after(() => db.closeDatabase());
 
 // In-memory HTTP request harness (bypasses loopback networking restrictions)
 function testRequest(pathname, { method = 'GET', body = null } = {}) {
@@ -18,7 +20,10 @@ function testRequest(pathname, { method = 'GET', body = null } = {}) {
     });
     req.url = pathname;
     req.method = method;
-    req.headers = { 'content-type': 'application/json' };
+    req.headers = {
+      'content-type': 'application/json',
+      authorization: `Bearer ${process.env.ADMIN_TOKEN}`
+    };
 
     if (body !== null) {
       req.push(JSON.stringify(body));
