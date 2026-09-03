@@ -1,0 +1,31 @@
+{
+  "name": "apex-product-app",
+  "version": "1.0.0",
+  "description": "State-of-the-art Full-Stack Product OS & Storefront",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/api.test.js",
+    "seed": "node -e \"require('./db/database.js').resetDatabase()\""
+  },
+  "keywords": [
+    "product-app",
+    "ecommerce",
+    "inventory",
+    "rest-api",
+    "sqlite",
+    "node"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.4",
+    "nodemon": "^3.1.14"
+  }
+}

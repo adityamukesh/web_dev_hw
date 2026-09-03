@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Product OS & Storefront</title>
+  
+  <!-- Inter Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS for animations and glassmorphism -->
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Content Layout -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- STOREFRONT VIEW -->
+    <div id="storefront-view" class="transition-opacity duration-300">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        
+        <!-- Left Filter Sidebar -->
+        <aside class="lg:col-span-1 lg:sticky lg:top-24" id="sidebar-container">
+          <!-- Rendered via filters.js -->
+        </aside>
+
+        <!-- Right Product Gallery & Toolbar -->
+        <section class="lg:col-span-3 min-w-0">
+          <div id="toolbar-container">
+            <!-- Rendered via filters.js -->
+          </div>
+
+          <!-- Product Grid/List Container -->
+          <div id="products-grid" class="min-h-[400px]">
+            <!-- Skeleton Loading State by Default -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                <div class="aspect-square w-full rounded-xl skeleton"></div>
+                <div class="h-4 w-2/3 rounded-md skeleton"></div>
+                <div class="h-3 w-1/2 rounded-md skeleton"></div>
+                <div class="flex justify-between pt-2">
+                  <div class="h-5 w-16 rounded-md skeleton"></div>
+                  <div class="h-8 w-8 rounded-xl skeleton"></div>
+                </div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                <div class="aspect-square w-full rounded-xl skeleton"></div>
+                <div class="h-4 w-2/3 rounded-md skeleton"></div>
+                <div class="h-3 w-1/2 rounded-md skeleton"></div>
+                <div class="flex justify-between pt-2">
+                  <div class="h-5 w-16 rounded-md skeleton"></div>
+                  <div class="h-8 w-8 rounded-xl skeleton"></div>
+                </div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                <div class="aspect-square w-full rounded-xl skeleton"></div>
+                <div class="h-4 w-2/3 rounded-md skeleton"></div>
+                <div class="h-3 w-1/2 rounded-md skeleton"></div>
+                <div class="flex justify-between pt-2">
+                  <div class="h-5 w-16 rounded-md skeleton"></div>
+                  <div class="h-8 w-8 rounded-xl skeleton"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- ADMIN STUDIO VIEW (Hidden by default) -->
+    <div id="admin-view" class="hidden transition-opacity duration-300">
+      <!-- Rendered via adminView.js -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-10 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">A</div>
+        <span class="font-bold text-slate-800 dark:text-slate-200">Apex Product OS</span>
+        <span>• Enterprise-grade Storefront & Inventory Platform</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <span>Press <kbd class="px-1.5 py-0.5 font-mono text-[10px] bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded">C</kbd> for Cart</span>
+        <span>Press <kbd class="px-1.5 py-0.5 font-mono text-[10px] bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded">D</kbd> for Dark Mode</span>
+        <span>Press <kbd class="px-1.5 py-0.5 font-mono text-[10px] bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded">/</kbd> to Search</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal & Drawer Containers -->
+  <div id="product-modal-container"></div>
+  <div id="cart-drawer-container"></div>
+  <div id="checkout-modal-container"></div>
+  <div id="crud-modal-container"></div>
+  <div id="toast-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="/js/components/toast.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/filters.js"></script>
+  <script src="/js/components/productCard.js"></script>
+  <script src="/js/components/productModal.js"></script>
+  <script src="/js/components/cartDrawer.js"></script>
+  <script src="/js/components/adminView.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
